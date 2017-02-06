@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/exit"
+        app:showAsAction="ifRoom"
+        android:title="Exit"
+        android:icon="@android:drawable/ic_lock_power_off" />
+
+    <item
+        android:id="@+id/Télécharger"
+        app:showAsAction="ifRoom"
+        android:title="Télécharger"
+        android:icon="@android:drawable/stat_sys_download" />
+
+    <item
+        android:id="@+id/info"
+        app:showAsAction="ifRoom"
+        android:title="Infos"
+        android:icon="@android:drawable/ic_dialog_info" />
+
+    <item
+        android:id="@+id/corriger"
+        app:showAsAction="never"
+        android:title="Sujet/Correction"
+        android:icon="@android:drawable/ic_dialog_alert" />
+
+</menu>

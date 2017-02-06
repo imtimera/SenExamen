@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerItems">
+        <item>Terminale S1~S3</item>
+        <item>Terminale S2~S4</item>
+        <item>Terminale G</item>
+        <item>Terminale L1~L2</item>
+    </string-array>
+
+    <string-array name="matiere">
+        <item>Maths</item>
+        <item>Physique Chimie</item>
+        <item>SVT</item>
+        <item>Anglais</item>
+    </string-array>
+
+</resources>
