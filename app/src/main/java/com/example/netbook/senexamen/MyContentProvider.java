@@ -30,8 +30,8 @@ public class MyContentProvider extends ContentProvider {
     public static final int URL = 2;
     public static final int SERIE = 3;
     public static final int MATIERE = 4;
-    public static final int TYPE = 5;
-    public static final int ANNEE = 6;
+    public static final int ANNEE = 5;
+    public static final int TYPE = 6;
     public static final int STOCKAGE = 7;
 
 
@@ -44,8 +44,8 @@ public class MyContentProvider extends ContentProvider {
         matcher.addURI(AUTHORITY, EXAMEN_PATH + "/URL/#", URL);
         matcher.addURI(AUTHORITY, EXAMEN_PATH + "/SERIE/#", SERIE);
         matcher.addURI(AUTHORITY, EXAMEN_PATH + "/MATIERE/#", MATIERE);
-        matcher.addURI(AUTHORITY, EXAMEN_PATH + "/TYPE/#", TYPE);
         matcher.addURI(AUTHORITY, EXAMEN_PATH + "/ANNEE/#", ANNEE);
+        matcher.addURI(AUTHORITY, EXAMEN_PATH + "/TYPE/#", TYPE);
         matcher.addURI(AUTHORITY, EXAMEN_PATH + "/STOCKAGE/#", STOCKAGE);
 
 
@@ -74,28 +74,28 @@ public class MyContentProvider extends ContentProvider {
                 if (TextUtils.isEmpty(selection))
                     r = db.delete(DataBase.EXAMEN, DataBase.URL + " = " + id, null);
                 else
-                    r = db.delete(DataBase.EXAMEN, DataBase.URL + " = " + id + " and" + selection, selectionArgs);
+                    r = db.delete(DataBase.EXAMEN, DataBase.URL + " = " + id + " and "  + selection, selectionArgs);
                 break;
             case SERIE:
                 String serie = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection))
                     r = db.delete(DataBase.EXAMEN, DataBase.SERIE + " = " + serie, null);
                 else
-                    r = db.delete(DataBase.EXAMEN, DataBase.SERIE + " = " + serie + " and" + selection, selectionArgs);
+                    r = db.delete(DataBase.EXAMEN, DataBase.SERIE + " = " + serie + " and " + selection, selectionArgs);
                 break;
             case MATIERE:
                 String matiere = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection))
                     r = db.delete(DataBase.EXAMEN, DataBase.MATIERE + " = " + matiere, null);
                 else
-                    r = db.delete(DataBase.EXAMEN, DataBase.MATIERE + " = " + matiere + " and" + selection, selectionArgs);
+                    r = db.delete(DataBase.EXAMEN, DataBase.MATIERE + " = " + matiere + " and " + selection, selectionArgs);
                 break;
             case ANNEE:
                 String annee = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection))
                     r = db.delete(DataBase.EXAMEN, DataBase.ANNEE + " = " + annee, null);
                 else
-                    r = db.delete(DataBase.EXAMEN, DataBase.ANNEE + " = " + annee + " and" + selection, selectionArgs);
+                    r = db.delete(DataBase.EXAMEN, DataBase.ANNEE + " = " + annee + " and " + selection, selectionArgs);
                 break;
 
             case STOCKAGE:
@@ -103,7 +103,7 @@ public class MyContentProvider extends ContentProvider {
                 if (TextUtils.isEmpty(selection))
                     r = db.delete(DataBase.EXAMEN, DataBase.STOCKAGE + " = " + stockage, null);
                 else
-                    r = db.delete(DataBase.EXAMEN, DataBase.STOCKAGE + " = " + stockage + " and" + selection, selectionArgs);
+                    r = db.delete(DataBase.EXAMEN, DataBase.STOCKAGE + " = " + stockage + " and " + selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
@@ -174,28 +174,31 @@ public class MyContentProvider extends ContentProvider {
         Cursor cursor=null;
         switch (code) {
             case EXAMEN_TABLE:
-                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.STOCKAGE}, selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.TYPE,DataBase.STOCKAGE}, selection, selectionArgs, null, null, sortOrder);
                 break;
             case URL:
                 long id = ContentUris.parseId(uri);
-                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.STOCKAGE},DataBase.URL + "="+id,null, null, null, null);
+                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.TYPE,DataBase.STOCKAGE},DataBase.URL + "="+id,null, null, null, null);
                 break;
             case SERIE:
                 long serie = ContentUris.parseId(uri);
-                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.STOCKAGE},DataBase.SERIE + "="+serie,null, null, null, null);
+                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.TYPE,DataBase.STOCKAGE},DataBase.SERIE + "="+serie,null, null, null, null);
                 break;
             case MATIERE:
                 long matiere = ContentUris.parseId(uri);
-                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.STOCKAGE},DataBase.MATIERE + "="+matiere,null, null, null, null);
+                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.TYPE,DataBase.STOCKAGE},DataBase.MATIERE + "="+matiere,null, null, null, null);
                 break;
             case ANNEE:
                 long annee = ContentUris.parseId(uri);
-                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.STOCKAGE},DataBase.ANNEE + "="+annee,null, null, null, null);
+                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.TYPE,DataBase.STOCKAGE},DataBase.ANNEE + "="+annee,null, null, null, null);
                 break;
-
+            case TYPE:
+                long type = ContentUris.parseId(uri);
+                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.TYPE,DataBase.STOCKAGE},DataBase.TYPE + "="+type,null, null, null, null);
+                break;
             case STOCKAGE:
                 long stockage = ContentUris.parseId(uri);
-                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.STOCKAGE},DataBase.STOCKAGE + "="+stockage,null, null, null, null);
+                cursor = db.query(EXAMEN_PATH, new String[]{DataBase.URL, DataBase.SERIE,DataBase.MATIERE, DataBase.ANNEE,DataBase.TYPE,DataBase.STOCKAGE},DataBase.STOCKAGE + "="+stockage,null, null, null, null);
                 break;
             default:
                 Log.d("Uri provider = ", uri.toString());
@@ -221,21 +224,21 @@ public class MyContentProvider extends ContentProvider {
                 if (TextUtils.isEmpty(selection))
                     r = db.update(DataBase.EXAMEN, values, DataBase.URL + "=" + id, selectionArgs);
                 else
-                    r = db.update(DataBase.EXAMEN, values, DataBase.URL + " = " + id + " and" + selection, selectionArgs);
+                    r = db.update(DataBase.EXAMEN, values, DataBase.URL + " = " + id + " and " + selection, selectionArgs);
                 break;
             case SERIE:
                 String serie = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection))
                     r = db.update(DataBase.EXAMEN, values, DataBase.SERIE + "=" + serie, selectionArgs);
                 else
-                    r = db.update(DataBase.EXAMEN, values, DataBase.SERIE + " = " + serie + " and" + selection, selectionArgs);
+                    r = db.update(DataBase.EXAMEN, values, DataBase.SERIE + " = " + serie + " and " + selection, selectionArgs);
                 break;
             case MATIERE:
                 String matiere = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection))
                     r = db.update(DataBase.EXAMEN, values, DataBase.MATIERE + "=" + matiere, selectionArgs);
                 else
-                    r = db.update(DataBase.EXAMEN, values, DataBase.MATIERE + " = " + matiere + " and" + selection, selectionArgs);
+                    r = db.update(DataBase.EXAMEN, values, DataBase.MATIERE + " = " + matiere + " and " + selection, selectionArgs);
                 break;
 
             case ANNEE:
@@ -243,15 +246,22 @@ public class MyContentProvider extends ContentProvider {
                 if (TextUtils.isEmpty(selection))
                     r = db.update(DataBase.EXAMEN, values, DataBase.ANNEE + "=" + annee, selectionArgs);
                 else
-                    r = db.update(DataBase.EXAMEN, values, DataBase.ANNEE + " = " + annee + " and" + selection, selectionArgs);
+                    r = db.update(DataBase.EXAMEN, values, DataBase.ANNEE + " = " + annee + " and " + selection, selectionArgs);
                 break;
 
+            case TYPE:
+                String type = uri.getLastPathSegment();
+                if (TextUtils.isEmpty(selection))
+                    r = db.update(DataBase.EXAMEN, values, DataBase.TYPE + "=" + type, selectionArgs);
+                else
+                    r = db.update(DataBase.EXAMEN, values, DataBase.TYPE + " = " + type + " and " + selection, selectionArgs);
+                break;
             case STOCKAGE:
                 String stockage = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection))
                     r = db.update(DataBase.EXAMEN, values, DataBase.STOCKAGE + "=" + stockage, selectionArgs);
                 else
-                    r = db.update(DataBase.EXAMEN, values, DataBase.STOCKAGE + " = " + STOCKAGE + " and" + selection, selectionArgs);
+                    r = db.update(DataBase.EXAMEN, values, DataBase.STOCKAGE + " = " + STOCKAGE + " and " + selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Not yet implemented");

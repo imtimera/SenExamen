@@ -30,10 +30,10 @@ public class DataBase extends SQLiteOpenHelper {
             "create table " + EXAMEN + "( " +
                     URL + " String PRIMARY KEY not null, " +
                     SERIE + " String not null, " +
-                    MATIERE + " String not null, " +
-                    ANNEE + " integer  not null,"+
-                    TYPE + " integer  not null,"+
-                    STOCKAGE + "integer not null";
+                    MATIERE + " String not null , " +
+                    ANNEE + " integer  not null , "+
+                    TYPE + " integer  not null , "+
+                    STOCKAGE + " integer not null )";
 
     public DataBase(Context context) {
         super(context, DB_NAME, null, VERSION);
