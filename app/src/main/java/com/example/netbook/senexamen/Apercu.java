@@ -175,16 +175,24 @@ public class Apercu extends AppCompatActivity {
 
                 }
                 else {
-                    Toast t = Toast.makeText(this, "malheureusement cette correction n'existe pas encore ", Toast.LENGTH_LONG);
+                    Toast t = Toast.makeText(this, "Malheureusement cette correction n'existe pas :( ", Toast.LENGTH_LONG);
                     t.show();
                 }
                 return true;
             case  R.id.share:
                 //setShareIntent(new Intent(Intent.ACTION_SEND));
-                Intent myShareIntent = new Intent(Intent.ACTION_SEND);
+                /*Intent myShareIntent = new Intent(Intent.ACTION_SEND);
                 myShareIntent.setType("pdf");
                 myShareIntent.putExtra(Intent.EXTRA_STREAM,"ImageUri");
                 setShareIntent(myShareIntent);
+                */
+                Intent share = new Intent(android.content.Intent.ACTION_SEND);
+                //share.setType("pdf");
+                //share.setData(Uri.parse(url));
+                share.setDataAndType(Uri.parse(url),"pdf");
+                share.putExtra(Intent.EXTRA_STREAM,"pdf");
+                setShareIntent(share);
+                startActivity(Intent.createChooser(share, getString(R.string.app_name)));
                 return true;
 
         }
