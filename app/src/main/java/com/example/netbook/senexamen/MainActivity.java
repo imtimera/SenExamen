@@ -1,6 +1,7 @@
 package com.example.netbook.senexamen;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,9 +10,11 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.opengl.EGLExt;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -90,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
                 */
                 String type="1";
                 iii.putExtra("type",type);
-                Toast t = Toast.makeText(this, "Vous avez choisi " + serie.getSelectedItem().toString() + "/" + matiere.getSelectedItem().toString()+" "+annee.getSelectedItem().toString(), Toast.LENGTH_LONG);
+                Toast t = Toast.makeText(this, "Baccalauréat "  +annee.getSelectedItem().toString()+ " " + matiere.getSelectedItem().toString()+ " " + serie.getSelectedItem().toString(), Toast.LENGTH_LONG);
                 t.show();
                 startActivity(iii);
             } else {
-                this.setTheme(android.R.style.Animation_Translucent);
+                this.setTheme(android.R.style.Animation_Dialog);
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);//new ContextThemeWrapper(this, R.style.AlertDialogCustom));
                 dlgAlert.setTitle("ATTENTION");
                 dlgAlert.setMessage("Veuillez vérifier votre connexion Internet" );
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 dlgAlert.create().show();
             }
         } else {
-            Toast t = Toast.makeText(this, "Ce choix n'existe pas dans la base de donnée ", Toast.LENGTH_LONG);
+            Toast t = Toast.makeText(this, "Ce choix n'existe pas dans la base de donnée", Toast.LENGTH_LONG);
             t.show();
 
         }

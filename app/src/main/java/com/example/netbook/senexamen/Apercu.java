@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -135,8 +136,9 @@ public class Apercu extends AppCompatActivity {
                 return true;
 
             case R.id.info:
-                this.setTheme(android.R.style.Holo_ButtonBar_AlertDialog);
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);//new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                this.setTheme(android.R.style.Animation_Translucent);
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                //new ContextThemeWrapper(this, R.style.AlertDialogCustom));
                 dlgAlert.setTitle("Informations");
                 dlgAlert.setMessage("Cette application a été developpé pour aider les eleves de terminale (S/L) à préparer leur baccalauréat, son utilisation nécessite une connection internet \n \n" +
                                     "Des questions ou des remarques ? Contacter nous à "+"imtimera1@gmail.com");
@@ -156,7 +158,6 @@ public class Apercu extends AppCompatActivity {
             case R.id.corriger:
                 annee=2016;
                 int type2=1-typeCur;
-                typeCur=type2;
                 Cursor cur=getContentResolver().query(MyContentProvider.EXAMEN_URI,null,
                         DataBase.MATIERE + "=?" + " AND " + DataBase.SERIE + "=?" +" AND "+DataBase.ANNEE + " =? " +" AND "+DataBase.TYPE + " =? ",
                         new String[]{matiere,serie,annee+"",type2+""},null);
@@ -164,6 +165,7 @@ public class Apercu extends AppCompatActivity {
                 int i=cur.getCount();
                 cur.moveToFirst();
                 if (i>0 ) {
+                    typeCur=type2;
                     if (isConnectedInternet() == true) {
                         url = cur.getString(0);
                         wv.loadUrl("http://docs.google.com/gview?embedded=true&url=" + url);
@@ -172,7 +174,6 @@ public class Apercu extends AppCompatActivity {
                         Toast t = Toast.makeText(this, "Veuillez vérifier votre connexion Internet", Toast.LENGTH_LONG);
                         t.show();
                     }
-
                 }
                 else {
                     Toast t = Toast.makeText(this, "Malheureusement cette correction n'existe pas :( ", Toast.LENGTH_LONG);
@@ -185,20 +186,27 @@ public class Apercu extends AppCompatActivity {
                 myShareIntent.setType("pdf");
                 myShareIntent.putExtra(Intent.EXTRA_STREAM,"ImageUri");
                 setShareIntent(myShareIntent);
-                */
+
                 Intent share = new Intent(android.content.Intent.ACTION_SEND);
-                //share.setType("pdf");
-                //share.setData(Uri.parse(url));
-                share.setDataAndType(Uri.parse(url),"pdf");
+                share.setType("pdf");
+                share.setData(Uri.parse(url));
+                //share.setDataAndType(Uri.parse(url),"pdf");
                 share.putExtra(Intent.EXTRA_STREAM,"pdf");
                 setShareIntent(share);
                 startActivity(Intent.createChooser(share, getString(R.string.app_name)));
+                */
+                Log.i("matcnoo", "Button share ok !");
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Here is the share content body";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SenExamen");
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, url);
+                startActivity(Intent.createChooser(sharingIntent, "SenExamen: Partager ce sujet via"));
                 return true;
-
         }
-    Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-    startActivityForResult(myIntent, 0);
-    return super.onOptionsItemSelected(item);
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -219,9 +227,10 @@ public class Apercu extends AppCompatActivity {
                 DownloadManager.Request request = new DownloadManager.Request(uri);
                 //request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE);
                 request.setTitle("Téléchargement en cours");
-                request.setDescription(url);
+                request.setDescription("Bac " + matiere+" " +serie+ " "+annee);
                 request.allowScanningByMediaScanner();
                 String nom= URLUtil.guessFileName(url, null, MimeTypeMap.getFileExtensionFromUrl(url));
+
                 request.setDestinationInExternalFilesDir(Apercu.this,Environment.DIRECTORY_DOWNLOADS,nom);
 
                 DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
@@ -229,8 +238,8 @@ public class Apercu extends AppCompatActivity {
 
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setVisibleInDownloadsUi(true);
-                IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 
+                IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
                 BroadcastReceiver receiver = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
@@ -238,7 +247,6 @@ public class Apercu extends AppCompatActivity {
                         if (myDownloadReference == ref) {
                             //Charger le fichier telecharger
                             Toast an = Toast.makeText(Apercu.this, "Téléchargement terminé", Toast.LENGTH_LONG);
-                            //an.setGravity(Gravity.TOP, 25, 400);
                             an.show();
                         }
                     }
