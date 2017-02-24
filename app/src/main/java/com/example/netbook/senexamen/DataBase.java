@@ -28,12 +28,13 @@ public class DataBase extends SQLiteOpenHelper {
     //creatoion de table carte
     public static final String CREATE_EXAMEN =
             "create table " + EXAMEN + "( " +
-                    URL + " String PRIMARY KEY not null, " +
+                    URL + " String not null, " +
                     SERIE + " String not null, " +
                     MATIERE + " String not null , " +
                     ANNEE + " integer  not null , "+
                     TYPE + " integer  not null , "+
-                    STOCKAGE + " integer not null )";
+                    STOCKAGE + " integer not null , " +
+            "primary key ("+URL+" , " +SERIE+" , " +MATIERE+" , " +ANNEE+" , " +TYPE+" , " +STOCKAGE+" ) "+ ")";
 
     public DataBase(Context context) {
         super(context, DB_NAME, null, VERSION);

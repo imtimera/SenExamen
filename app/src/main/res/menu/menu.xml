@@ -1,10 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/exit"
+        android:id="@+id/corriger"
         app:showAsAction="ifRoom"
-        android:title="Exit"
-        android:icon="@android:drawable/ic_lock_power_off" />
+        android:title="Sujet/Correction"
+        android:icon="@android:drawable/ic_popup_sync" />
+
+    <item
+        android:id="@+id/share"
+        app:showAsAction="ifRoom"
+        android:title="Partager"
+        android:icon="@android:drawable/ic_menu_share"
+        android:actionProviderClass=
+            "android.widget.ShareActionProvider" />
 
     <item
         android:id="@+id/Télécharger"
@@ -14,14 +23,15 @@
 
     <item
         android:id="@+id/info"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:title="Infos"
         android:icon="@android:drawable/ic_dialog_info" />
 
     <item
-        android:id="@+id/corriger"
+        android:id="@+id/exit"
         app:showAsAction="never"
-        android:title="Sujet/Correction"
-        android:icon="@android:drawable/ic_dialog_alert" />
+        android:title="Quitter"
+        android:icon="@android:drawable/ic_lock_power_off" />
+
 
 </menu>
