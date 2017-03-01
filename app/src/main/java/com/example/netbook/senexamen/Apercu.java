@@ -52,26 +52,27 @@ public class Apercu extends AppCompatActivity {
     WebView wv;
     final Activity activity = this;
     private ShareActionProvider mShareActionProvider;
-    private  String url, serie,matiere,type;
+    private String url, serie, matiere, type;
     private int annee, typeCur;
     private ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_apercu);
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        wv=(WebView)findViewById(R.id.web);
-        Intent i=getIntent();
-        url=i.getStringExtra("url");
-        serie=i.getStringExtra("serie");
-        annee=Integer.parseInt(i.getStringExtra("annee"));
-        matiere=i.getStringExtra("matiere");
-        type=i.getStringExtra("type");
+        wv = (WebView) findViewById(R.id.web);
+        Intent i = getIntent();
+        url = i.getStringExtra("url");
+        serie = i.getStringExtra("serie");
+        annee = Integer.parseInt(i.getStringExtra("annee"));
+        matiere = i.getStringExtra("matiere");
+        type = i.getStringExtra("type");
         wv.getSettings().setJavaScriptEnabled(true);
-        typeCur= Integer.parseInt(type.toString());
+        typeCur = Integer.parseInt(type.toString());
         wv.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Activities and WebViews measure progress with different scales.
@@ -84,9 +85,9 @@ public class Apercu extends AppCompatActivity {
                 Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
             }
         });
-        wv.loadUrl("http://docs.google.com/gview?embedded=true&url="+url);
+        wv.loadUrl("http://docs.google.com/gview?embedded=true&url=" + url);
         setSupportActionBar(toolbar);
-        actionBar=getSupportActionBar();
+        actionBar = getSupportActionBar();
 
         // You could also hide the action Bar
         // getSupportActionBar().hide();
@@ -99,10 +100,9 @@ public class Apercu extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
 
         MenuItem item = menu.findItem(R.id.share);
 
@@ -124,9 +124,9 @@ public class Apercu extends AppCompatActivity {
     }
 
 
-@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.exit:
                 finish();
                 System.exit(0);
@@ -141,7 +141,7 @@ public class Apercu extends AppCompatActivity {
                 //new ContextThemeWrapper(this, R.style.AlertDialogCustom));
                 dlgAlert.setTitle("Informations");
                 dlgAlert.setMessage("Cette application a été developpé pour aider les eleves de terminale (S/L) à préparer leur baccalauréat, son utilisation nécessite une connection internet \n \n" +
-                                    "Des questions ou des remarques ? Contacter nous à "+"imtimera1@gmail.com");
+                        "Des questions ou des remarques ? Contacter nous à " + "imtimera1@gmail.com");
                 dlgAlert.setPositiveButton("OK", null);
                 dlgAlert.setCancelable(true);
                 dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -156,31 +156,29 @@ public class Apercu extends AppCompatActivity {
                 return true;
 
             case R.id.corriger:
-                annee=2016;
-                int type2=1-typeCur;
-                Cursor cur=getContentResolver().query(MyContentProvider.EXAMEN_URI,null,
-                        DataBase.MATIERE + "=?" + " AND " + DataBase.SERIE + "=?" +" AND "+DataBase.ANNEE + " =? " +" AND "+DataBase.TYPE + " =? ",
-                        new String[]{matiere,serie,annee+"",type2+""},null);
+                annee = 2016;
+                int type2 = 1 - typeCur;
+                Cursor cur = getContentResolver().query(MyContentProvider.EXAMEN_URI, null,
+                        DataBase.MATIERE + "=?" + " AND " + DataBase.SERIE + "=?" + " AND " + DataBase.ANNEE + " =? " + " AND " + DataBase.TYPE + " =? ",
+                        new String[]{matiere, serie, annee + "", type2 + ""}, null);
 
-                int i=cur.getCount();
+                int i = cur.getCount();
                 cur.moveToFirst();
-                if (i>0 ) {
-                    typeCur=type2;
+                if (i > 0) {
+                    typeCur = type2;
                     if (isConnectedInternet() == true) {
                         url = cur.getString(0);
                         wv.loadUrl("http://docs.google.com/gview?embedded=true&url=" + url);
-                    }
-                    else {
+                    } else {
                         Toast t = Toast.makeText(this, "Veuillez vérifier votre connexion Internet", Toast.LENGTH_LONG);
                         t.show();
                     }
-                }
-                else {
-                    Toast t = Toast.makeText(this, "Malheureusement cette correction n'existe pas :( ", Toast.LENGTH_LONG);
+                } else {
+                    Toast t = Toast.makeText(this, "Malheureusement la correction de ce sujet n'existe pas :( ", Toast.LENGTH_LONG);
                     t.show();
                 }
                 return true;
-            case  R.id.share:
+            case R.id.share:
                 //setShareIntent(new Intent(Intent.ACTION_SEND));
                 /*Intent myShareIntent = new Intent(Intent.ACTION_SEND);
                 myShareIntent.setType("pdf");
@@ -210,8 +208,7 @@ public class Apercu extends AppCompatActivity {
     }
 
 
-    public boolean isConnectedInternet()
-    {
+    public boolean isConnectedInternet() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -222,44 +219,48 @@ public class Apercu extends AppCompatActivity {
 
 
     public void download() {
-                Uri uri = Uri.parse(url);
+        Uri uri = Uri.parse(url);
 
-                DownloadManager.Request request = new DownloadManager.Request(uri);
-                //request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE);
-                request.setTitle("Téléchargement en cours");
-                request.setDescription("Bac " + matiere+" " +serie+ " "+annee);
-                request.allowScanningByMediaScanner();
-                String nom= URLUtil.guessFileName(url, null, MimeTypeMap.getFileExtensionFromUrl(url));
+        File dir=Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS);
+        File dirsave = new File(dir,"SenExamen");
+        Log.d("BEFORE","before");
+        if (!dirsave.exists()){
+            //dirsave.setWritable(true);
+            //dirsave.setReadable(true);
+            boolean b = dirsave.mkdirs();
+            Log.d("SAVE","Creation of "+dirsave+" = "+b);
+        }
 
-                request.setDestinationInExternalFilesDir(Apercu.this,Environment.DIRECTORY_DOWNLOADS,nom);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        //request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE);
+        request.setTitle("Téléchargement en cours");
+        request.setDescription("Bac " + matiere + " " + serie + " " + annee);
+        request.allowScanningByMediaScanner();
+        String nom = URLUtil.guessFileName(url, null, MimeTypeMap.getFileExtensionFromUrl(url));
 
-                DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                final long myDownloadReference = dm.enqueue(request);
+        request.setDestinationInExternalFilesDir(Apercu.this, Environment.DIRECTORY_DOCUMENTS, "SenExamen/"+nom);
+        DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        final long myDownloadReference = dm.enqueue(request);
 
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setVisibleInDownloadsUi(true);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setVisibleInDownloadsUi(true);
 
-                IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-                BroadcastReceiver receiver = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        long ref = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                        if (myDownloadReference == ref) {
-                            //Charger le fichier telecharger
-                            Toast an = Toast.makeText(Apercu.this, "Téléchargement terminé", Toast.LENGTH_LONG);
-                            an.show();
-                        }
-                    }
-                };
-                registerReceiver(receiver, filter);
-            /*File dir=new File(Environment.getExternalStoragePublicDirectory(
-                            Environment.DIRECTORY_DOCUMENTS),"SenExamen" );
-
-                if (!dir.exists()){
-                    dir.mkdir();
-                }*/
-
+        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                long ref = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+                if (myDownloadReference == ref) {
+                    //Charger le fichier telecharger
+                    Toast an = Toast.makeText(Apercu.this, "Téléchargement terminé", Toast.LENGTH_LONG);
+                    an.show();
+                }
             }
+        };
+        registerReceiver(receiver, filter);
+
+    }
 
     @Override
     protected void onDestroy() {

@@ -14,6 +14,7 @@ import android.opengl.EGLExt;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (i==0) {
             remplirBDD();
         }
+        Log.d("COUCOU","coucou");
     }
 
     @Override
