@@ -33,8 +33,8 @@ public class DataBase extends SQLiteOpenHelper {
                     MATIERE + " String not null , " +
                     ANNEE + " integer  not null , "+
                     TYPE + " integer  not null , "+
-                    STOCKAGE + " string " +
-            "primary key ("+URL+" , " +SERIE+" , " +MATIERE+" , " +ANNEE+" , " +TYPE+" ) "+ ")";
+                    STOCKAGE + " string , " +
+            "PRIMARY KEY ("+URL+" , " +SERIE+" , " +MATIERE+" , " +ANNEE+" , " +TYPE+" ) "+ ")";
 
     public DataBase(Context context) {
         super(context, DB_NAME, null, VERSION);

@@ -3,6 +3,8 @@ package com.example.netbook.senexamen;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -55,7 +57,7 @@ public class Apercu extends AppCompatActivity {
     private String url, serie, matiere, type;
     private int annee, typeCur;
     private ActionBar actionBar;
-
+    Cursor cur;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,8 +160,8 @@ public class Apercu extends AppCompatActivity {
             case R.id.corriger:
                 annee = 2016;
                 int type2 = 1 - typeCur;
-                Cursor cur = getContentResolver().query(MyContentProvider.EXAMEN_URI, null,
-                        DataBase.MATIERE + "=?" + " AND " + DataBase.SERIE + "=?" + " AND " + DataBase.ANNEE + " =? " + " AND " + DataBase.TYPE + " =? ",
+                cur = getContentResolver().query(MyContentProvider.EXAMEN_URI, null,
+                        DataBase.MATIERE + " = ? " + " AND " + DataBase.SERIE + " = ? " + " AND " + DataBase.ANNEE + " = ? " + " AND " + DataBase.TYPE + " = ? ",
                         new String[]{matiere, serie, annee + "", type2 + ""}, null);
 
                 int i = cur.getCount();
@@ -222,9 +224,8 @@ public class Apercu extends AppCompatActivity {
         Uri uri = Uri.parse(url);
 
         File dir=Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOCUMENTS);
-        File dirsave = new File(dir,"SenExamen");
-        Log.d("BEFORE","before");
+                Environment.DIRECTORY_DOCUMENTS).getParentFile();
+        final File dirsave = new File(dir,"SenExamen");
         if (!dirsave.exists()){
             //dirsave.setWritable(true);
             //dirsave.setReadable(true);
@@ -237,9 +238,9 @@ public class Apercu extends AppCompatActivity {
         request.setTitle("Téléchargement en cours");
         request.setDescription("Bac " + matiere + " " + serie + " " + annee);
         request.allowScanningByMediaScanner();
-        String nom = URLUtil.guessFileName(url, null, MimeTypeMap.getFileExtensionFromUrl(url));
+        final String nom = URLUtil.guessFileName(url, null, MimeTypeMap.getFileExtensionFromUrl(url));
 
-        request.setDestinationInExternalFilesDir(Apercu.this, Environment.DIRECTORY_DOCUMENTS, "SenExamen/"+nom);
+        request.setDestinationInExternalFilesDir(Apercu.this, Environment.getRootDirectory().getAbsolutePath(), "SenExamen/"+nom);
         DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         final long myDownloadReference = dm.enqueue(request);
 
@@ -255,6 +256,17 @@ public class Apercu extends AppCompatActivity {
                     //Charger le fichier telecharger
                     Toast an = Toast.makeText(Apercu.this, "Téléchargement terminé", Toast.LENGTH_LONG);
                     an.show();
+                    ContentResolver cr = getContentResolver();
+                    ContentValues values = new ContentValues();
+                    values.put(DataBase.STOCKAGE,dirsave.getAbsolutePath()+"/"+nom);
+
+                    cr.update(MyContentProvider.EXAMEN_URI,values,DataBase.URL + " = ? ",new String[]{url});
+                    cur = getContentResolver().query(MyContentProvider.EXAMEN_URI, null,
+                            DataBase.MATIERE + " = ? " + " AND " + DataBase.SERIE + " = ? " + " AND " + DataBase.ANNEE + " = ? " + " AND " + DataBase.TYPE + " = ? ",
+                            new String[]{matiere, serie, annee + "", type + ""}, null);
+                    cur.moveToFirst();
+                    //Toast an1 = Toast.makeText(Apercu.this, cur.getString(0)+cur.getString(5), Toast.LENGTH_LONG);
+                    //an1.show();
                 }
             }
         };

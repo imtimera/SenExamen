@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         if (i==0) {
             remplirBDD();
         }
-        Log.d("COUCOU","coucou");
     }
 
     @Override
