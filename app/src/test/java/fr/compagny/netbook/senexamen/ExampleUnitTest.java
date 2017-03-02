@@ -1,4 +1,4 @@
-package com.example.netbook.senexamen;
+package fr.compagny.netbook.senexamen;
 
 import org.junit.Test;
 

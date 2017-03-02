@@ -5,7 +5,7 @@
     android:id="@+id/activity_apercu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.netbook.senexamen.Apercu"
+    tools:context="com.example.netbook.senexamen.fr.example.netbook.senexamen.Apercu"
     android:uiOptions="splitActionBarWhenNarrow">
 
     <android.support.v7.widget.Toolbar

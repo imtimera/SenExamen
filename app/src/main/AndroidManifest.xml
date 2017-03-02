@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.netbook.senexamen">
+    package="fr.compagny.netbook.senexamen">
 
     <uses-sdk
         android:minSdkVersion="8"/>
@@ -18,7 +18,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,7 +25,7 @@
 
         <provider
             android:name=".MyContentProvider"
-            android:authorities="com.example.netbook.senexamen"
+            android:authorities="fr.compagny.netbook.senexamen"
             android:enabled="true"
             android:exported="false"></provider>
     </application>

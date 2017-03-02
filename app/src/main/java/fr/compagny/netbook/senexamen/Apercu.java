@@ -1,4 +1,4 @@
-package com.example.netbook.senexamen;
+package fr.compagny.netbook.senexamen;
 
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -14,40 +13,26 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.net.http.SslError;
-import android.opengl.Visibility;
 import android.os.Environment;
-import android.provider.ContactsContract;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.InterpolatorRes;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
-import android.webkit.SslErrorHandler;
 import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.support.v7.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class Apercu extends AppCompatActivity {
     Toolbar toolbar;
@@ -259,7 +244,6 @@ public class Apercu extends AppCompatActivity {
                     ContentResolver cr = getContentResolver();
                     ContentValues values = new ContentValues();
                     values.put(DataBase.STOCKAGE,dirsave.getAbsolutePath()+"/"+nom);
-
                     cr.update(MyContentProvider.EXAMEN_URI,values,DataBase.URL + " = ? ",new String[]{url});
                     cur = getContentResolver().query(MyContentProvider.EXAMEN_URI, null,
                             DataBase.MATIERE + " = ? " + " AND " + DataBase.SERIE + " = ? " + " AND " + DataBase.ANNEE + " = ? " + " AND " + DataBase.TYPE + " = ? ",

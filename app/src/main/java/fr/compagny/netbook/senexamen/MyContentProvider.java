@@ -1,24 +1,20 @@
-package com.example.netbook.senexamen;
+package fr.compagny.netbook.senexamen;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.CursorLoader;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.util.Date;
-
 public class MyContentProvider extends ContentProvider {
 
-    final String CONTENT_TYPE = "vnd.android.cursor.dir/com.example.netbook.senexamen";
-    final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/com.example.netbook.senexamen;";
-    private static final String AUTHORITY = "com.example.netbook.senexamen";
+    final String CONTENT_TYPE = "vnd.android.cursor.dir/fr.compagny.netbook.senexamen";
+    final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/fr.compagny.netbook.senexamen;";
+    private static final String AUTHORITY = "fr.compagny.netbook.senexamen";
 
     private static final String EXAMEN_PATH = "examen";
     private static final String SERIE_PATH = "serie";

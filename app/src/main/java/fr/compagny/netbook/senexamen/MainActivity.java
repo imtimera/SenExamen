@@ -1,7 +1,5 @@
-package com.example.netbook.senexamen;
+package fr.compagny.netbook.senexamen;
 
-import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,12 +8,9 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.opengl.EGLExt;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;

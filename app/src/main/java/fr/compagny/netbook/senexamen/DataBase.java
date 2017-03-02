@@ -1,7 +1,6 @@
-package com.example.netbook.senexamen;
+package fr.compagny.netbook.senexamen;
 
 import android.content.Context;
-import android.database.ContentObservable;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
