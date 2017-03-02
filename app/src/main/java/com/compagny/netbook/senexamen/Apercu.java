@@ -1,4 +1,4 @@
-package fr.compagny.netbook.senexamen;
+package com.compagny.netbook.senexamen;
 
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -143,7 +143,6 @@ public class Apercu extends AppCompatActivity {
                 return true;
 
             case R.id.corriger:
-                annee = 2016;
                 int type2 = 1 - typeCur;
                 cur = getContentResolver().query(MyContentProvider.EXAMEN_URI, null,
                         DataBase.MATIERE + " = ? " + " AND " + DataBase.SERIE + " = ? " + " AND " + DataBase.ANNEE + " = ? " + " AND " + DataBase.TYPE + " = ? ",
@@ -166,20 +165,6 @@ public class Apercu extends AppCompatActivity {
                 }
                 return true;
             case R.id.share:
-                //setShareIntent(new Intent(Intent.ACTION_SEND));
-                /*Intent myShareIntent = new Intent(Intent.ACTION_SEND);
-                myShareIntent.setType("pdf");
-                myShareIntent.putExtra(Intent.EXTRA_STREAM,"ImageUri");
-                setShareIntent(myShareIntent);
-
-                Intent share = new Intent(android.content.Intent.ACTION_SEND);
-                share.setType("pdf");
-                share.setData(Uri.parse(url));
-                //share.setDataAndType(Uri.parse(url),"pdf");
-                share.putExtra(Intent.EXTRA_STREAM,"pdf");
-                setShareIntent(share);
-                startActivity(Intent.createChooser(share, getString(R.string.app_name)));
-                */
                 Log.i("matcnoo", "Button share ok !");
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
