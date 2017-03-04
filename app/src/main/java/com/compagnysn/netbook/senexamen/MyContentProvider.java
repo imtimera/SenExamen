@@ -1,4 +1,4 @@
-package com.compagny.netbook.senexamen;
+package com.compagnysn.netbook.senexamen;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -12,9 +12,9 @@ import android.util.Log;
 
 public class MyContentProvider extends ContentProvider {
 
-    final String CONTENT_TYPE = "vnd.android.cursor.dir/com.compagny.netbook.senexamen";
-    final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/com.compagny.netbook.senexamen;";
-    private static final String AUTHORITY = "com.compagny.netbook.senexamen";
+    final String CONTENT_TYPE = "vnd.android.cursor.dir/com.compagnysn.netbook.senexamen";
+    final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/com.compagnysn.netbook.senexamen;";
+    private static final String AUTHORITY = "com.compagnysn.netbook.senexamen";
 
     private static final String EXAMEN_PATH = "examen";
     private static final String SERIE_PATH = "serie";

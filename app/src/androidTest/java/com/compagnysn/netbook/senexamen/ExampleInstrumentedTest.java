@@ -1,4 +1,4 @@
-package com.compagny.netbook.senexamen;
+package com.compagnysn.netbook.senexamen;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.compagny.netbook.senexamen", appContext.getPackageName());
+        assertEquals("com.compagnysn.netbook.senexamen", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.compagny.netbook.senexamen;
+package com.compagnysn.netbook.senexamen;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

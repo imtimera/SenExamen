@@ -1,4 +1,4 @@
-package com.compagny.netbook.senexamen;
+package com.compagnysn.netbook.senexamen;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         valider=(Button)findViewById(R.id.valider);
         welcome=(TextView)findViewById(R.id.welcome);
         Cursor cur=getContentResolver().query(MyContentProvider.EXAMEN_URI,null,
-                DataBase.MATIERE + "=?" + " AND " + DataBase.SERIE + "=?" ,
+                DataBase.MATIERE + " = ? " + " AND " + DataBase.SERIE + " = ?" ,
                 new String[]{pc,s1},null);
 
         int i=cur.getCount();
@@ -70,56 +70,58 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected  void StartActivite(View v) {
-        name_matiere = String.valueOf(matiere.getSelectedItem());
-        name_serie = String.valueOf(serie.getSelectedItem());
-        url = checkUrl(matiere.getSelectedItem().toString(), (serie.getSelectedItem().toString()), Integer.parseInt(annee.getSelectedItem().toString()));
-        if (!url.equals("")) {
-            if (isConnectedInternet() == true) {
-                Intent iii = new Intent(this, Apercu.class);
-                iii.putExtra("matiere", name_matiere);
-                iii.putExtra("serie", name_serie);
-                iii.putExtra("url", url);
-                iii.putExtra("annee",annee.getSelectedItem().toString());
-                /*Cursor cur=getContentResolver().query(MyContentProvider.EXAMEN_URI,null,
-                        DataBase.MATIERE + "=?" + " AND " + DataBase.SERIE + "=?" +" AND "+DataBase.ANNEE + " =? ",
-                        new String[]{String.valueOf(matiere.getSelectedItemId()),String.valueOf(serie.getSelectedItemId()),String.valueOf(annee.getSelectedItemId())},null);
+    public void StartActivite(View v) {
+        if (v==valider) {
+            name_matiere = String.valueOf(matiere.getSelectedItem());
+            name_serie = String.valueOf(serie.getSelectedItem());
+            url = checkUrl(matiere.getSelectedItem().toString(), (serie.getSelectedItem().toString()), Integer.parseInt(annee.getSelectedItem().toString()));
+            if (!url.equals("")) {
+                if (isConnectedInternet() == true) {
+                    Intent iii = new Intent(this, Apercu.class);
+                    iii.putExtra("matiere", name_matiere);
+                    iii.putExtra("serie", name_serie);
+                    iii.putExtra("url", url);
+                    iii.putExtra("annee", annee.getSelectedItem().toString());
+                    /*Cursor cur=getContentResolver().query(MyContentProvider.EXAMEN_URI,null,
+                            DataBase.MATIERE + " = ?" + " AND " + DataBase.SERIE + " = ?" +" AND "+DataBase.ANNEE + " = ? ",
+                            new String[]{String.valueOf(matiere.getSelectedItemId()),String.valueOf(serie.getSelectedItemId()),String.valueOf(annee.getSelectedItemId())},null);
 
-                String type=cur.getString(0);
-                */
-                String type="1";
-                iii.putExtra("type",type);
-                Toast t = Toast.makeText(this, "Baccalauréat "  +annee.getSelectedItem().toString()+ " " + matiere.getSelectedItem().toString()+ " " + serie.getSelectedItem().toString(), Toast.LENGTH_LONG);
-                t.show();
-                startActivity(iii);
+                    String type=cur.getString(0);
+                    */
+                    String type = "1";
+                    iii.putExtra("type", type);
+                    Toast t = Toast.makeText(this, "Baccalauréat " + annee.getSelectedItem().toString() + " " + matiere.getSelectedItem().toString() + " " + serie.getSelectedItem().toString(), Toast.LENGTH_LONG);
+                    t.show();
+                    startActivity(iii);
+                } else {
+                    this.setTheme(android.R.style.Animation_Dialog);
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);//new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                    dlgAlert.setTitle("ATTENTION");
+                    dlgAlert.setMessage("Veuillez vérifier votre connexion Internet");
+                    dlgAlert.setPositiveButton("OK", null);
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dlgAlert.setIcon(android.R.drawable.ic_dialog_alert);
+
+
+                    dlgAlert.create().show();
+                }
             } else {
-                this.setTheme(android.R.style.Animation_Dialog);
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);//new ContextThemeWrapper(this, R.style.AlertDialogCustom));
-                dlgAlert.setTitle("ATTENTION");
-                dlgAlert.setMessage("Veuillez vérifier votre connexion Internet" );
-                dlgAlert.setPositiveButton("OK", null);
-                dlgAlert.setCancelable(true);
-                dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                Toast t = Toast.makeText(this, "Ce choix n'existe pas dans la base de donnée", Toast.LENGTH_LONG);
+                t.show();
 
-                    }
-                });
-                dlgAlert.setIcon(android.R.drawable.ic_dialog_alert);
-
-
-                dlgAlert.create().show();
             }
-        } else {
-            Toast t = Toast.makeText(this, "Ce choix n'existe pas dans la base de donnée", Toast.LENGTH_LONG);
-            t.show();
-
         }
     }
 
 
     protected String checkUrl(String m, String s, int d){
         Cursor cur=getContentResolver().query(MyContentProvider.EXAMEN_URI,null,
-                DataBase.MATIERE + "=?" + " AND " + DataBase.SERIE + "=?" +" AND "+DataBase.ANNEE + " =? ", new String[]{m,s,d+""},null);
+                DataBase.MATIERE + " = ?" + " AND " + DataBase.SERIE + " = ?" +" AND "+DataBase.ANNEE + " = ? ", new String[]{m,s,d+""},null);
         int i=cur.getCount();
         cur.moveToFirst();
         if (i>0)
@@ -128,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     protected void ajouterBDD(String url,String serie, String matiere, int annee,int type, int stock) {
-        Cursor r = getContentResolver().query(MyContentProvider.EXAMEN_URI, null, DataBase.URL + "= ?"+" AND " +DataBase.SERIE + "= ?" , new String[]{url,serie}, null);
+        Cursor r = getContentResolver().query(MyContentProvider.EXAMEN_URI, null, DataBase.URL + " = ?"+" AND " +DataBase.SERIE + " = ?" , new String[]{url,serie}, null);
         if (r.getCount() == 0) {
             ContentValues values = new ContentValues();
             values.put(DataBase.URL, url);

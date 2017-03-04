@@ -1,4 +1,4 @@
-package com.compagny.netbook.senexamen;
+package com.compagnysn.netbook.senexamen;
 
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -124,10 +125,12 @@ public class Apercu extends AppCompatActivity {
 
             case R.id.info:
                 this.setTheme(android.R.style.Animation_Translucent);
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-                //new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
                 dlgAlert.setTitle("Informations");
-                dlgAlert.setMessage("Cette application a été developpé pour aider les eleves de terminale (S/L) à préparer leur baccalauréat, son utilisation nécessite une connection internet \n \n" +
+                dlgAlert.setMessage("Cette application a été développée à destination des élèves de terminale (S1~S2~S3~S4/L1~L2) du Sénégal.\n\n" +
+                        "Dans un but de vous aider à préparer l'examen du baccalauréat, elle regroupe les sujets des examens de 2006 à 2016, accompagnés de correction, son utilisation nécessite une connexion internet.\n" +
+                        "\n" +
+                        "Vous pouvez, à tout moment basculer du sujet à la correction d'un examen et vice versa, vous pouvez aussi partager ou sauvegarder l’énoncé en local sur votre appareil Android.\n \n" +
                         "Des questions ou des remarques ? Contacter nous à " + "imtimera1@gmail.com");
                 dlgAlert.setPositiveButton("OK", null);
                 dlgAlert.setCancelable(true);
@@ -210,7 +213,7 @@ public class Apercu extends AppCompatActivity {
         request.allowScanningByMediaScanner();
         final String nom = URLUtil.guessFileName(url, null, MimeTypeMap.getFileExtensionFromUrl(url));
 
-        request.setDestinationInExternalFilesDir(Apercu.this, Environment.getRootDirectory().getAbsolutePath(), "SenExamen/"+nom);
+        request.setDestinationInExternalPublicDir("SenExamen/",nom);
         DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         final long myDownloadReference = dm.enqueue(request);
 
